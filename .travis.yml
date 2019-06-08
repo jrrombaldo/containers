@@ -14,7 +14,7 @@ env:
 jobs:
   include:
     - stage: build
-        script:
+      script:
         - docker build -t jrromb/openvpn-as .
         - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
         - docker push jrromb/openvpn-as:latest

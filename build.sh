@@ -3,7 +3,7 @@
 export name=openvpn-as
 
 # building image
-docker build -t $name .
+docker build -t jrromb/openvpn-as .
 
 # cleanning any container left behind
 docker ps -q --filter "name=$name" \
@@ -18,7 +18,7 @@ docker run -itd \
     -p 9999:9999 \
     -p 8888:8888 \
     -p 8888:8888/udp \
-    $name:latest
+    jrromb/openvpn-as:latest
 
     # -v /tmp:/openvpnas_config \
 

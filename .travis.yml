@@ -11,7 +11,8 @@ env:
   include:
   - script:
     - docker run --rm --privileged multiarch/qemu-user-static:register --reset
-    - docker build -t $IMG_NAME .
+    - git clone https://github.com/Tautulli/Tautulli-Docker
+    - docker build -t $IMG_NAME . --build-arg OVERLAY_ARCH=arm
     - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
     - docker push $IMG_NAME
     - docker logout

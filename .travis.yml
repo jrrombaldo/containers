@@ -1,18 +1,27 @@
 dist: bionic
 sudo: required
+
 services:
 - docker
+
 language: bash
+
 env:
   global:
   - IMG_NAME="jrromb/tautulli-rpi"
   - secure: gDl+1lj4VNbqMfdytMjblbM+RLh9vwkwgnbNeO252SVlXgCCIbT+5eyEx3kUiMPBtBpB+qjqPaSeO7y3OqBKPTMXhycVFIKXvnBFpci+ZU4aQpPng1YMi/nHfmD8EBXoCkhxkgpVBrb2bNqhzJGlQ+DmRtcPOrAnNlJLawZFK7AzjeAvhRv1YGRklI9hC0J9hJLXOxhJ2VWvsPR02AnbqvMwt+9SLyfS8YAkyM/5CkEGLLTt2aJmUqE8UGupnnoLnrwCwIxcjPr/K5Vo8fl8/v0ZfVWrodpz5Rb7iVt3phVMqBCRdjkYZvwB51QP6a9oBTWADS0hncgf6yaO3dRIfyg8N+m/UkFRVUbQtdG7foI1ht4GJRnvg66LOR9ibpoIwr7giEQ1FTTratFn6z2qha7/CBr4t8earq3wLJuvsG3icnoPuhaFIF6tlDf+Rfzz0GT1qMFsIYyGJCcZ4uvGVj6zZe+tfxG9Xjrc+qDZURU4RfLDqHULLLrR53HDNfZF4hWnTH5TET9KWMRMvKLivPzNAN5A4DSONLQGGArv0DNepnzZ13WJdFWi+iAcvf/pVbCXEW1vmvtXgkolk87o5F3IKexlu5eEEyjua7VxofDiw7ahnKZYmfWy3+9N27XMsmthKwlUgYShh7dN5FYuHjhQXyDhQJY1HzDkYiOvrlk=
   - secure: W4hAXmj0hIF3j0TACvlNtkF+zGJ3Rrz1m9tNk8MgcKrAySXfZ/rq804JsUrO0z3/v8V+ox5Rf1cVmbr8EQWEdqALH8oziZxmDp8QUC7SOkPapWWhl5NKpr9ItX/WMMBUcNH/RVBo0I2m/o2SGlvX8Wr9BOG7YmOA8xq/yYmNpCWww0MWL7XNHwCLjM6pebQ6/L7dDSXTJoj/koAPQUjZRhcwJh+sBctLZl+ZfgeHXQ5nVIsTw0OwEZcYZnFh7aPDY+dJ4bvgXinkFyktMdLGNWBgiGrPW3ujhvbvWyOp2GV5hFdvSjeBKwpszJoS6K8vLMM7oQJLuLNSzM2PnEubMQ40f5znLZfwn7KScOgfcrRpuScsxcP367TW4cL7IjG+fIBGRb3K8ej/aZkPE5qmkHVlupK62/hKHaDfIH/BpSBp6IfWhpEzNFLTJnh4vME/fIK98ZfVm757R24mCLA2vBJElv8Nsu6fy8nR6NCPwmlTjsEfP4gJFmxjfATQEuRv9v8wGWWqdi8EHRcwyt15y+3WUhtcumTYIVlRlDl34kMZNhptWslQm2Xbh6PGmN+uuFYsREzgEpCjMTm2WIc5p0KKcpmMp2Zfbzd7XRC/x3/3BvQqE+YT229RVyAf/thcHcZdMQlj524wBCHZW2aA4+Ym32Q/WDryJPTL8POjc3g=
-  include:
-  - script:
-    - docker run --rm --privileged multiarch/qemu-user-static:register --reset
-    - git clone https://github.com/Tautulli/Tautulli-Docker && cd Tautulli-Docker && cd Tautulli-Docker
-    - docker build -t $IMG_NAME . --build-arg OVERLAY_ARCH=arm
-    - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
-    - docker push $IMG_NAME
-    - docker logout
+
+git:
+  clone: false
+
+before_install:
+  - git clone https://github.com/Tautulli/Tautulli-Docker
+
+script:
+  - docker run --rm --privileged multiarch/qemu-user-static:register --reset
+  - cd Tautulli-Docker
+  - docker build -t $IMG_NAME . --build-arg OVERLAY_ARCH=arm
+  - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
+  - docker push $IMG_NAME
+  - docker logout

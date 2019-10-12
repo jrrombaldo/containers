@@ -4,6 +4,7 @@ services:
 - docker
 language: bash
 env:
+  - ARCH=arm
   global:
   - IMG_NAME="jrromb/tautulli-rpi"
   - secure: gDl+1lj4VNbqMfdytMjblbM+RLh9vwkwgnbNeO252SVlXgCCIbT+5eyEx3kUiMPBtBpB+qjqPaSeO7y3OqBKPTMXhycVFIKXvnBFpci+ZU4aQpPng1YMi/nHfmD8EBXoCkhxkgpVBrb2bNqhzJGlQ+DmRtcPOrAnNlJLawZFK7AzjeAvhRv1YGRklI9hC0J9hJLXOxhJ2VWvsPR02AnbqvMwt+9SLyfS8YAkyM/5CkEGLLTt2aJmUqE8UGupnnoLnrwCwIxcjPr/K5Vo8fl8/v0ZfVWrodpz5Rb7iVt3phVMqBCRdjkYZvwB51QP6a9oBTWADS0hncgf6yaO3dRIfyg8N+m/UkFRVUbQtdG7foI1ht4GJRnvg66LOR9ibpoIwr7giEQ1FTTratFn6z2qha7/CBr4t8earq3wLJuvsG3icnoPuhaFIF6tlDf+Rfzz0GT1qMFsIYyGJCcZ4uvGVj6zZe+tfxG9Xjrc+qDZURU4RfLDqHULLLrR53HDNfZF4hWnTH5TET9KWMRMvKLivPzNAN5A4DSONLQGGArv0DNepnzZ13WJdFWi+iAcvf/pVbCXEW1vmvtXgkolk87o5F3IKexlu5eEEyjua7VxofDiw7ahnKZYmfWy3+9N27XMsmthKwlUgYShh7dN5FYuHjhQXyDhQJY1HzDkYiOvrlk=
@@ -16,7 +17,7 @@ before_install:
 script:
 - docker run --rm --privileged multiarch/qemu-user-static:register --reset
 - cd Tautulli-Docker
-- docker build -t $IMG_NAME --build-arg OVERLAY_ARCH=arm --platform arm .
+- docker build -t $IMG_NAME --build-arg OVERLAY_ARCH=arm .
 - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
 - docker push $IMG_NAME
 - docker logout

@@ -61,8 +61,10 @@ if [ ! -f "$CONFIG_FLAGH" ]; then
 
     $OVPN_VOL/scripts/sacli --key "vpn.server.daemon.udp.port" --value "$VPN_TCP_PORT" ConfigPut
     $OVPN_VOL/scripts/sacli --key "vpn.server.daemon.tcp.port" --value "$VPN_UDP_PORT" ConfigPut
-
-
+    
+    $OVPN_VOL/scripts/sacli --key "vpn.server.dhcp_option.dns.0" --value "$DNS_PRIMARY" ConfigPut
+    $OVPN_VOL/scripts/sacli --key "vpn.server.dhcp_option.dns.1" --value "$DNS_SECONDARY" ConfigPut
+  
     $OVPN_VOL/scripts/sacli --key "vpn.server.max_clients" --value 20 ConfigPut
 
 

@@ -5,7 +5,7 @@ language: bash
 env:
   - CONTAINER=jrromb/http-test      DIR=http-test
   - CONTAINER=jrromb/openvpn-as     DIR=openvpn-as
-#  - CONTAINER=jrromb/tautulli-rpi   DIR=tautulli-rpi
+  - CONTAINER=jrromb/tautulli-rpi   DIR=tautulli-rpi    SCRIPT=build.sh     ARCH=arm
 
 script: 
   - echo "BUILDING $CONTAINER"

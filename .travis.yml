@@ -6,7 +6,7 @@ env:
   - CONTAINER=jrromb/rasp-plex      DIR=rasp-plex       QEMU=1
   - CONTAINER=jrromb/http-test      DIR=http-test
   - CONTAINER=jrromb/openvpn-as     DIR=openvpn-as
-  - CONTAINER=jrromb/tautulli-rpi   DIR=tautulli-rpi    QEMU=1     ARCH=arm
+  - CONTAINER=jrromb/tautulli-rpi   DIR=tautulli-rpi    QEMU=1     ARCH=arm   SCRIPT=script.sh
 
 script: 
   - echo "BUILDING $CONTAINER"
@@ -24,5 +24,5 @@ script:
   - |
     echo "updating DockerHub description"
     pwd
-    [ -f ./README.md ] && ../update_dockerhub_desc.sh || echo "NO $DIR/README.md FOUND"
+    [ -f ./README.md ] && ../update_dockerhub_desc.sh || echo "NO ./README.md FOUND"
 

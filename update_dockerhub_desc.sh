@@ -2,6 +2,9 @@
 set -euo pipefail
 IFS=$'\n\t'
 
+# credits to https://github.com/peter-evans/dockerhub-description/blob/master/entrypoint.sh
+
+
 README_FILEPATH=${README_FILEPATH:="./README.md"}
 
 echo "Acquiring token"

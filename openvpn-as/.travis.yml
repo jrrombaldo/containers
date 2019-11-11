@@ -1,0 +1,37 @@
+sudo: required
+
+services:
+  - docker
+
+language: bash
+
+env:
+  global:
+    - secure: "U0KIun2y5DbmzY8c4pxXH+YrX9nVa1RbPQbrQ4KvpDAZOqNelmr1K0Yr+ujT6p/c+TL91ezvjbXXoQr7XxtLIeXa8SygO38fY9QX/9rsKLbut1aQIQf9+Wm6Vp47K75qz3ppQQc+dMr9toTy8zyPk+vemDVgZZDvFzOWAZEg/vD+hKT1tr8LLY1AiOMZe5Gmy90+CkjWqOzFZw81bfmTBwyIzCEUJt0caKNPIfNuFNX6L1zvrmkoZ+0axlDgc/z8ZrHTuM+bj5iPaaM8F0adeBG3YQ2EObEt/u3Qs0ajFodCrIURyl7V0QVmAUUQlqJomM5+SmnlO/tjMKvN3FKS2tUKJM8sUKsVSrMzL1yEoWnEXKakrh41IpZ3v1lnXw45ZqdYRYmVNwy2lvBD+wU5K7DHsuVA4mzIG1L4rnnq3pnnAfy6swFipw0UazgK3YGnGct4skYeRFkj8Dv29Z02KAFmfKnVsqppqnoa3Wcdu6XtfG0o5UttOP3z0n7gkwZo/ygFJj0BREqMFdJ57bss2p2HVgcGNHJk9hx//IhHNeP9bNlfYg3OD269iv08CPrZ4c6rp6e8z5gH1X7gfDmQdeFYpkqoWa8nafgt+J7wt+FixiPV3E3+dhsqHJpWIie7SPumcMYhuEIrNFnB9Q8/uYbOMlejwVTWH2rXQmkh2oA="
+    - secure: "eLW7kBD0sfEmOQlnu7nzL40ihjxSXaY6k93agPiEeILV42D3G7m+H457tWcaVT8WbG1Gan0qe/nwakKDH6J2ExJJAM9uY8hN5rzHdCjEsPlTozysjTp9lmOwHSAJQMDQAqV3FQZ6UhUPhfR4afmgelDNI1Gm4TypnpS5WfcFhZSeRD/lG+xD7BmhGwCWhsJKCSCpdmooVIT7wiG6xV/WZVk/WHyI77uOmDPZPw7vrBWwmUYtFzzzdYITPa1vt6RjMvTkksdXTyb+siaF1qTjGuDH36krg0/JzIkM/CZm0vWE/6mC1ZzXbAy8AKdWAfBkDbK/Qa+h8oasIXxVmSEiTfUXxdiBDsFGufbhOXhesWReDaxGYKMwFw/f6GlsHUna3K8PLPEVW5RZp1K4ptRIfzeVqJ93kOFT8g4vw9ZvB2IvN0vb7js2TLqPGEc1DhDV2POCNBj49OGpDzvGvjJs28TPwoinsbtoyFIjXl9c18MgonwwyG++PmVykHUL3HWGZvBFlMA/gEZQ59FBTRB5helO6lHuBw0TcuF7HxsgMc141xHlUho6ugfNZCGGR9bYEogzNfiQPXS21Qc6znXcLud4wMtr9MblUEaejaeLYmzz1S0FRy2gr+fgexpNKcLc5C9ZrOLwwNoYz906R5mqFhFFVs63v3JhZjrQO6K3Eyk="
+    - secure: "bYxCu4t3LSKSyeNGDUK/pjO7O7AaRnvg6o/4Rn88aAmhpNpjRu8iG9IfoCrAWKBjKb73eCV3N/zRuvIlnsk4k+xkZkvH3+qF74w7FXtaGv/fFHoENa43tU/GWPyZOAsSTIt5OgEcgN9QvL5y6NWPqTRWB2ub/TGt89nNo6mCOneXSfOWLpVP45GDPI4Q18HU529vRHsGRQfsh9GWKofl6yJsMI+iqoy/JkEeBfaaxHctD1SXwRKqgq0BSX7eJyVpy4Z4Y4O9VWZzEmd5Q4c9HoSsZFUjyYvbogJMOgN+KFEUepDZ66r2q1p/9jx8phkMAi64RqUBjD0CC7pcj+VwmWiZPG5yhuf3qFm6+lZaiF9FhVkPSp2xZ3up/KfepAz4b2bn2wFjThlhSJ4Hr23JP4xTzKueX16H5d2zS5a/7hHl6TD+r7tm81rxhRkmqoQJC7/xBwMO7HHmKCHbtU6XJlPBYSTzAkBNROLrnmyHeLlyK5AwO9zs50gjxdMLp0eAqU1C+FwXv+TlZtYXAly5DmEb96a1V0zgzUpWdgqxCdeTE48rpGIVYJ34co1Xs25iOhJ/5+JwIMB3PfNykqOc7Fzi2fpTC0CP76Q82TLlP5hu/sH/E4jPOc3nC5IKv+2haNpAFBiDB2nfQY/7yNsvoXLH/BUU2MhVEKO/rMBfDM4="
+
+jobs:
+  include:
+    - stage: build
+      script:
+        - docker build -t jrromb/openvpn-as .
+        - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
+        - docker push jrromb/openvpn-as:latest
+        - docker logout
+        # - sleep 45 #making sure the conatainer is up
+        # - docker ps -q --filter "name=openvpn-as" | grep -q . && exit 0
+        # - exit -1
+    # - stage: validate
+    #   script:
+    #     - git clone https://github.com/lukebond/microscanner-wrapper.gitdocker
+      after_success:
+        - curl -d "" https://hooks.microbadger.com/images/jrromb/openvpn-as/$MICROBADGER
+
+    # - stage: deploy
+    #   script:
+    #     - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
+    #     - docker push jrromb/openvpn:latest
+    #     - docker logout
+    #   after_success:
+    #   - curl -d "" https://hooks.microbadger.com/images/jrromb/openvpn/$MICROBADGER

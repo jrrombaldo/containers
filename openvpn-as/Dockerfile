@@ -2,7 +2,6 @@ FROM ubuntu:bionic
 
 LABEL maintainer="Carlos Rombaldo <jr.rombaldo@gmail.com>"
 
-
 ENV EXTERNAL_HOST=""
 ENV OVPN_PASS="changeme"
 ENV VPN_TCP_PORT="8443"

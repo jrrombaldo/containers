@@ -2,6 +2,7 @@
 
 export name=openvpn-as
 
+
 # building image
 docker build -t $name .
 

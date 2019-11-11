@@ -1,0 +1,21 @@
+dist: bionic
+services:
+- docker
+language: bash
+env:
+  - CONTAINER=jrromb/http-test      DIR=http-test
+  - CONTAINER=jrromb/openvpn-as     DIR=openvpn-as
+#  - CONTAINER=jrromb/tautulli-rpi   DIR=tautulli-rpi
+
+script: 
+  - echo "BUILDING $CONTAINER"
+  - | 
+    cd $DIR
+    if [ ! -z "$SCRIPT" ] ; then
+      ./$SCRIPT
+    else
+      docker build -t $CONTAINER .
+      docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
+      docker push $CONTAINER:latest
+      docker logout
+    fi

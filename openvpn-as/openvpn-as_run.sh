@@ -3,7 +3,6 @@
 export OVPN_VOL='/openvpnas_config'
 export CONFIG_FLAGH="$OVPN_VOL/initialized"
 
-
 # if no external host is defined, use the internet facing IP
 if [ -z "$EXTERNAL_HOST" ]; then export EXTERNAL_HOST=$(curl -s 'https://api.ipify.org?format=text'); fi
 

@@ -21,6 +21,6 @@ script:
     fi
   - |
     echo "updating DockerHub description"
-    cd $DIR
+    pwd
     [ -f ./README.md ] && ./update_dockerhub_desc.sh || echo "NO $DIR/README.md FOUND"
 

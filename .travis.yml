@@ -16,7 +16,7 @@ script:
       ./$SCRIPT
     else
       [ -z "$QEMU" ] && docker run --rm --privileged multiarch/qemu-user-static:register --reset
-      docker build -t $CONTAINER .
+      docker build -t $CONTAINER:latest .
       docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
       docker push $CONTAINER:latest
       docker logout

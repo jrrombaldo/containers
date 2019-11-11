@@ -3,9 +3,10 @@ services:
 - docker
 language: bash
 env:
+  - CONTAINER=jrromb/rasp-plex      DIR=rasp-plex       QEMU=1
   - CONTAINER=jrromb/http-test      DIR=http-test
   - CONTAINER=jrromb/openvpn-as     DIR=openvpn-as
-  - CONTAINER=jrromb/tautulli-rpi   DIR=tautulli-rpi    SCRIPT=build.sh     ARCH=arm
+  - CONTAINER=jrromb/tautulli-rpi   DIR=tautulli-rpi    QEMU=1     ARCH=arm
 
 script: 
   - echo "BUILDING $CONTAINER"
@@ -14,6 +15,7 @@ script:
     if [ ! -z "$SCRIPT" ] ; then
       ./$SCRIPT
     else
+      [ -z "$QEMU" ] && docker run --rm --privileged multiarch/qemu-user-static:register --reset
       docker build -t $CONTAINER .
       docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
       docker push $CONTAINER:latest
@@ -22,5 +24,5 @@ script:
   - |
     echo "updating DockerHub description"
     pwd
-    [ -f ./README.md ] && ./update_dockerhub_desc.sh || echo "NO $DIR/README.md FOUND"
+    [ -f ./README.md ] && ../update_dockerhub_desc.sh || echo "NO $DIR/README.md FOUND"
 

@@ -19,3 +19,8 @@ script:
       docker push $CONTAINER:latest
       docker logout
     fi
+  - |
+    echo "updating DockerHub description"
+    cd $DIR
+    [ -f $DIR/README.md ] && ./update_dockerhub_desc.sh || echo "NO $DIR/README.md FOUND"
+

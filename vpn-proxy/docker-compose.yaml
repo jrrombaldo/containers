@@ -1,0 +1,12 @@
+vpn-proxy:
+  image: test
+  privileged: true
+  restart: always
+  container_name: vpn-proxy
+  environment:
+    VPN_USER: openvpn
+    VPN_PASS: changeme
+  ports:
+    - 1080:1080
+  volumes:
+    - /example.ovpn:/client.ovpn

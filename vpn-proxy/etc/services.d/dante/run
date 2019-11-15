@@ -1,0 +1,25 @@
+#!/usr/bin/with-contenv sh
+COUNT=0
+SLEEP=10
+TIMEOUT=120
+
+# TODO figure out a way to make the service wait for VPN to connect without this hack
+while [ $COUNT -lt $TIMEOUT ]
+do
+  echo "elapsed $COUNT seconds (max wait $TIMEOUT)" ;
+  ip tuntap | grep -q tun0
+  if [ 0 == "$?" ]; then
+          echo "VPN is up, starting dante..."
+
+#          TODO hack 2 to setup the DON
+          sh /usr/local/bin/adjust-dns.sh
+          exec s6-setuidgid root sockd
+  else
+          echo "VPN is not up yet, waiting more $SLEEP seconds..."
+  fi
+    true $(( COUNT=COUNT+SLEEP ))
+    sleep ${SLEEP}
+done
+
+echo "VPN did not start within $TIMEOUT seconds, exiting 1 "
+exit 1

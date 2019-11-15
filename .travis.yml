@@ -9,7 +9,8 @@ env:
   - CONTAINER=jrromb/vpn-proxy      DIR=vpn-proxy
   - CONTAINER=jrromb/tautulli-rpi   DIR=tautulli-rpi    QEMU=1     ARCH=arm   SCRIPT=build.sh
 
-script: 
+script:
+  - set -e # less forgiving
   - echo "BUILDING $CONTAINER"
   - | 
     cd $DIR

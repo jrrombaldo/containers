@@ -1,5 +1,5 @@
 vpn-proxy:
-  image: test
+  image: jrromb/vpn-proxy
   privileged: true
   restart: always
   container_name: vpn-proxy

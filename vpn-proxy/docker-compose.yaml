@@ -9,4 +9,4 @@ vpn-proxy:
   ports:
     - 1080:1080
   volumes:
-    - /example.ovpn:/client.ovpn
+    - /Users/junicarl/Downloads/google.ovpn:/client.ovpn

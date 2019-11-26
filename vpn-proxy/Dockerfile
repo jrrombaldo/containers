@@ -39,4 +39,4 @@ EXPOSE  1080
 
 ENTRYPOINT ["/init"]
 
-#HEALTHCHECK --interval=15s --start-period=2m --timeout=3s --retries=20 CMD /usr/local/bin/healthcheck.sh || exit 1
+HEALTHCHECK --interval=15s --start-period=2m --timeout=3s --retries=20 CMD /usr/local/bin/healthcheck.sh || exit 1

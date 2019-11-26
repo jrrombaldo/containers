@@ -25,9 +25,6 @@ RUN     apk add --no-cache --virtual .build-deps \
         make -j install && \
         cd / && rm -r /src && \
         apk del .build-deps linux-pam-dev build-base && \
-        ls
-#       installing overlay
-RUN \
         apk add --no-cache linux-pam openvpn curl && \
         curl -J -L -o /tmp/s6-overlay-arm.tar.gz \
             https://github.com/just-containers/s6-overlay/releases/download/${S6_OVERLAY_VERSION}/s6-overlay-amd64.tar.gz && \

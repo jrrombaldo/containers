@@ -15,6 +15,7 @@ script:
   - | 
     cd $DIR
     if [ ! -z "$SCRIPT" ] ; then
+      chmod +x ./$SCRIPT
       ./$SCRIPT
     else
       [ ! -z "$QEMU" ] && docker run --rm --privileged multiarch/qemu-user-static:register --reset

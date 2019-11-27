@@ -6,8 +6,17 @@ echo -e "${VPN_USER}\n${VPN_PASS}" > ${VPN_CRED}
 
 exec s6-setuidgid root openvpn \
     --config /client.ovpn \
+    --script-security 2 \
+    --up /etc/openvpn/up.sh \
+    --down /etc/openvpn/down.sh
     --auth-user-pass ${VPN_CRED}
 
 #     \
 #    --log-append /var/log/openvpn.log \
 #    --daemon openvpn
+
+
+
+script-security 2
+up /etc/openvpn/up.sh
+down /etc/openvpn/down.sh

@@ -11,8 +11,6 @@ do
   if [ 0 == "$?" ]; then
           echo "VPN is up, starting dante..."
 
-#          TODO hack 2 to setup the DON
-          sh /usr/local/bin/adjust-dns.sh
           exec s6-setuidgid root sockd
   else
           echo "VPN is not up yet, waiting more $SLEEP seconds..."

@@ -3,7 +3,7 @@ services:
 - docker
 language: bash
 env:
-  - CONTAINER=jrromb/rasp-plex      DIR=rasp-plex       QEMU=1
+#  - CONTAINER=jrromb/rasp-plex      DIR=rasp-plex       QEMU=1
   - CONTAINER=jrromb/http-test      DIR=http-test
   - CONTAINER=jrromb/openvpn-as     DIR=openvpn-as
   - CONTAINER=jrromb/vpn-proxy      DIR=vpn-proxy

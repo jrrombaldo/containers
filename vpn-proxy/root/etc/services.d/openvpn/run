@@ -8,15 +8,26 @@ exec s6-setuidgid root openvpn \
     --config /client.ovpn \
     --script-security 2 \
     --up /etc/openvpn/up.sh \
-    --down /etc/openvpn/down.sh
-    --auth-user-pass ${VPN_CRED}
+    --down /etc/openvpn/down.sh \
+    --auth-user-pass ${VPN_CRED}  
 
-#     \
+
 #    --log-append /var/log/openvpn.log \
 #    --daemon openvpn
 
 
-
-script-security 2
-up /etc/openvpn/up.sh
-down /etc/openvpn/down.sh
+# --keepalive n m : Helper option for setting timeouts in server mode.  Send
+#                   ping once every n seconds, restart if ping not received
+#                   for m seconds.
+# --inactive n [bytes] : Exit after n seconds of activity on tun/tap device
+#                   produces a combined in/out byte count < bytes.
+# --ping-exit n   : Exit if n seconds pass without reception of remote ping.
+# --ping-restart n: Restart if n seconds pass without reception of remote ping.
+# --ping-timer-rem: Run the --ping-exit/--ping-restart timer only if we have a
+#                   remote address.
+# --ping n        : Ping remote once every n seconds over TCP/UDP port.
+# --connect-retry n [m] : For client, number of seconds to wait between
+#                   connection retries (default=5). On repeated retries
+#                   the wait time is exponentially increased to a maximum of m
+#                   (default=300).
+# --connect-retry-max n : Maximum connection attempt retries, default infinite.

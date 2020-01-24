@@ -1,0 +1,43 @@
+#!/usr/bin/with-contenv sh
+
+
+restart_all(){
+    s6-svscanctl -6 /run/s6/services/
+}
+
+
+VPN_REMOTE=$(cat /client.ovpn | grep  "^remote\s *" | head -n1 | awk '{print $2}')
+if [ -z ${VPN_REMOTE} ]; then 
+    echo "[ERR] could not find the remote address on '/client.ovp'";
+    exit 1;
+fi
+
+while true; do
+    # giving time to establish the VPN connetion
+    sleep 45s;
+
+    if (nslookup ${VPN_REMOTE}> /dev/null 2>&1); then
+        # echo "[watchdog] can resolve $VPN_REMOTE";
+        if (( ! $(/usr/local/bin/healthcheck.sh) )); then
+        #     echo "  -> health check OK!";
+        # else
+           echo "  -> health check failed!, giing it 30s";
+            sleep 30s;
+             if /usr/local/bin/healthcheck.sh; then
+                echo "  -> health check failed again, restarting ...";
+                restart_all
+            fi
+        fi
+    else
+        echo "[ERR]can NOT resolve $VPN_REMOTE, waiting 30 seconds ...";
+        sleep 30s;
+        if $(nslookup ${VPN_REMOTE} > /dev/null 2>&1); then
+            echo "can resolve $VPN_REMOTE,on the second attempt";
+        else
+            echo "[ERR] could not resolve $VPN_REMOTE again :(";
+            echo "[ERR], restarting services"
+            restart_all
+        fi;
+    fi;
+done
+        
